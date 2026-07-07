@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timer &amp; Stopwatch &mdash; Toolbox</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/timer.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">🧰</span>
+      Toolbox
+    </div>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="wheel.html">Spin the Wheel</a>
+      <a href="timer.html" class="active">Timer / Stopwatch</a>
+      <a href="links.html">Links</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">⏱️ Timer &amp; Stopwatch</h1>
+    <p class="page-subtitle">Track elapsed time, or count down to zero with a visual ring.</p>
+
+    <div class="tab-row">
+      <button id="tabStopwatch" class="tab-btn active">Stopwatch</button>
+      <button id="tabCountdown" class="tab-btn">Countdown Timer</button>
+    </div>
+
+    <section id="stopwatchPanel" class="panel timer-panel">
+      <div class="stopwatch-display" id="stopwatchDisplay">00:00:00.00</div>
+      <div class="btn-row" style="justify-content: center;">
+        <button id="swStartBtn" class="btn btn-primary">▶ Start</button>
+        <button id="swPauseBtn" class="btn" disabled>⏸ Pause</button>
+        <button id="swLapBtn" class="btn btn-ghost" disabled>🚩 Lap</button>
+        <button id="swResetBtn" class="btn btn-danger">↺ Reset</button>
+      </div>
+      <ol id="lapList" class="lap-list"></ol>
+    </section>
+
+    <section id="countdownPanel" class="panel timer-panel" style="display:none;">
+      <div class="countdown-layout">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 200 200" class="ring-svg">
+            <circle class="ring-bg" cx="100" cy="100" r="90"></circle>
+            <circle id="ringProgress" class="ring-progress" cx="100" cy="100" r="90"></circle>
+          </svg>
+          <div class="ring-center">
+            <div id="countdownDisplay" class="countdown-display">05:00</div>
+            <div id="countdownStatus" class="countdown-status">Ready</div>
+          </div>
+        </div>
+
+        <div class="countdown-controls">
+          <div class="duration-inputs">
+            <label>H<input id="hoursInput" type="number" min="0" max="23" value="0" /></label>
+            <label>M<input id="minutesInput" type="number" min="0" max="59" value="5" /></label>
+            <label>S<input id="secondsInput" type="number" min="0" max="59" value="0" /></label>
+          </div>
+
+          <div class="preset-row">
+            <button class="btn btn-ghost preset-btn" data-seconds="60">1m</button>
+            <button class="btn btn-ghost preset-btn" data-seconds="180">3m</button>
+            <button class="btn btn-ghost preset-btn" data-seconds="300">5m</button>
+            <button class="btn btn-ghost preset-btn" data-seconds="600">10m</button>
+          </div>
+
+          <div class="btn-row">
+            <button id="cdStartBtn" class="btn btn-primary">▶ Start</button>
+            <button id="cdPauseBtn" class="btn" disabled>⏸ Pause</button>
+            <button id="cdResetBtn" class="btn btn-danger">↺ Reset</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">Toolbox &mdash; simple browser tools</footer>
+
+  <script src="js/fullscreen.js"></script>
+  <script src="js/timer.js"></script>
+</body>
+</html>
