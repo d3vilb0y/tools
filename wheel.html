@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spin the Wheel &mdash; Toolbox</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/wheel.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">🧰</span>
+      Toolbox
+    </div>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="wheel.html" class="active">Spin the Wheel</a>
+      <a href="timer.html">Timer / Stopwatch</a>
+      <a href="links.html">Links</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">🎡 Spin the Wheel</h1>
+    <p class="page-subtitle">Enter one name per line, then spin to pick a winner.</p>
+
+    <div class="wheel-layout">
+      <div class="wheel-stage panel">
+        <div class="wheel-holder">
+          <div class="wheel-pointer">▼</div>
+          <canvas id="wheelCanvas" width="480" height="480"></canvas>
+        </div>
+        <div class="btn-row" style="margin-top: 1.5rem; justify-content: center;">
+          <button id="spinBtn" class="btn btn-primary">🎯 Spin</button>
+          <label class="remove-toggle">
+            <input type="checkbox" id="removeWinnerToggle" />
+            Remove winner after spin
+          </label>
+        </div>
+      </div>
+
+      <div class="wheel-config panel">
+        <h2 style="margin-top:0;">Names</h2>
+        <p style="color: var(--text-dim); margin-top: -0.5rem;">One name per line.</p>
+        <textarea id="namesInput" rows="12" placeholder="Alice&#10;Bob&#10;Charlie"></textarea>
+        <div class="btn-row" style="margin-top: 0.75rem;">
+          <button id="updateWheelBtn" class="btn">Update wheel</button>
+          <button id="shuffleBtn" class="btn btn-ghost">🔀 Shuffle</button>
+          <button id="resetNamesBtn" class="btn btn-ghost">Reset</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">Toolbox &mdash; simple browser tools</footer>
+
+  <div id="winnerOverlay" class="winner-overlay">
+    <div id="confettiLayer" class="confetti-layer"></div>
+    <div class="winner-card">
+      <div class="winner-label">Winner</div>
+      <div id="winnerName" class="winner-name">&mdash;</div>
+      <button id="closeWinnerBtn" class="btn btn-primary">Nice!</button>
+    </div>
+  </div>
+
+  <script src="js/fullscreen.js"></script>
+  <script src="js/wheel.js"></script>
+</body>
+</html>
