@@ -2,8 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("toolbox-theme");
+        if (!t) t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Links &mdash; Toolbox</title>
+  <meta name="description" content="Quick links to other useful pages and services." />
+  <meta property="og:title" content="Links — Toolbox" />
+  <meta property="og:description" content="Quick jump-off points to other pages." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#7c5cff" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -16,6 +31,7 @@
       <a href="index.html">Home</a>
       <a href="wheel.html">Spin the Wheel</a>
       <a href="timer.html">Timer / Stopwatch</a>
+      <a href="qr.html">QR Code</a>
       <a href="links.html" class="active">Links</a>
     </nav>
   </header>
@@ -40,6 +56,7 @@
   </main>
 
   <footer class="site-footer">Toolbox &mdash; simple browser tools</footer>
+  <script src="js/theme.js"></script>
   <script src="js/fullscreen.js"></script>
 </body>
 </html>

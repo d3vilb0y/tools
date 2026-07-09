@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("toolbox-theme");
+        if (!t) t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator &mdash; Toolbox</title>
+  <meta name="description" content="Turn any link or text into a scannable QR code, with an optional NSALABB badge." />
+  <meta property="og:title" content="QR Code Generator — Toolbox" />
+  <meta property="og:description" content="Turn any link or text into a scannable QR code, with an optional NSALABB badge." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#7c5cff" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/qr.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">🧰</span>
+      Toolbox
+    </div>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="wheel.html">Spin the Wheel</a>
+      <a href="timer.html">Timer / Stopwatch</a>
+      <a href="qr.html" class="active">QR Code</a>
+      <a href="links.html">Links</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">🔳 QR Code Generator</h1>
+    <p class="page-subtitle">Turn any link or text into a scannable QR code &mdash; with an optional NSALABB badge to make it uniquely yours.</p>
+
+    <div class="qr-layout">
+      <div class="qr-stage panel">
+        <div class="qr-canvas-wrap">
+          <canvas id="qrCanvas"></canvas>
+        </div>
+        <div class="btn-row" style="margin-top: 1.5rem; justify-content: center;">
+          <button id="downloadBtn" class="btn btn-primary" disabled>⬇ Download PNG</button>
+        </div>
+        <p id="qrError" class="qr-error"></p>
+      </div>
+
+      <div class="qr-config panel">
+        <h2 style="margin-top:0;">Content</h2>
+        <textarea id="qrInput" rows="4" placeholder="https://example.com or any text"></textarea>
+
+        <div class="quick-fill-row">
+          <button class="btn btn-ghost quick-fill-btn" data-value="https://secrets.nsalabb.se">secrets.nsalabb.se</button>
+          <button class="btn btn-ghost quick-fill-btn" data-value="https://kahoot.it">Kahoot</button>
+        </div>
+
+        <label class="badge-toggle">
+          <input type="checkbox" id="badgeToggle" checked />
+          Include NSALABB badge
+        </label>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">Toolbox &mdash; simple browser tools</footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/fullscreen.js"></script>
+  <script src="js/vendor/qrcode.js"></script>
+  <script src="js/qr.js"></script>
+</body>
+</html>

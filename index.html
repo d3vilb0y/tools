@@ -2,8 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("toolbox-theme");
+        if (!t) t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Toolbox</title>
+  <meta name="description" content="A small collection of simple browser tools: a spin-the-wheel name picker, a timer/stopwatch, and a QR code generator." />
+  <meta property="og:title" content="Toolbox" />
+  <meta property="og:description" content="Simple browser tools — wheel picker, timer/stopwatch, QR generator, and links." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#7c5cff" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -16,6 +31,7 @@
       <a href="index.html" class="active">Home</a>
       <a href="wheel.html">Spin the Wheel</a>
       <a href="timer.html">Timer / Stopwatch</a>
+      <a href="qr.html">QR Code</a>
       <a href="links.html">Links</a>
     </nav>
   </header>
@@ -39,6 +55,13 @@
         <span class="go">Open tool →</span>
       </a>
 
+      <a class="tool-card" href="qr.html">
+        <span class="icon">🔳</span>
+        <h2>QR Code Generator</h2>
+        <p>Turn any link or text into a scannable QR code, with an optional NSALABB badge to make it your own.</p>
+        <span class="go">Open tool →</span>
+      </a>
+
       <a class="tool-card" href="links.html">
         <span class="icon">🔗</span>
         <h2>Links</h2>
@@ -49,6 +72,7 @@
   </main>
 
   <footer class="site-footer">Toolbox &mdash; simple browser tools</footer>
+  <script src="js/theme.js"></script>
   <script src="js/fullscreen.js"></script>
 </body>
 </html>

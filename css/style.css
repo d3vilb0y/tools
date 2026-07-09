@@ -1,7 +1,9 @@
 :root {
   --bg: #0f1220;
+  --bg-glow: #23264a;
   --bg-elevated: #1a1e33;
   --bg-card: #171b30;
+  --header-bg: rgba(15, 18, 32, 0.7);
   --text: #f1f3fb;
   --text-dim: #9aa1c4;
   --accent: #7c5cff;
@@ -12,6 +14,23 @@
   --border: #2a2f4d;
   --radius: 16px;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="light"] {
+  --bg: #f3f4fb;
+  --bg-glow: #dfe2fa;
+  --bg-elevated: #ffffff;
+  --bg-card: #ffffff;
+  --header-bg: rgba(255, 255, 255, 0.75);
+  --text: #191c30;
+  --text-dim: #5b6089;
+  --accent: #6d4aff;
+  --accent-2: #0891b2;
+  --accent-3: #db2777;
+  --success: #059669;
+  --danger: #dc2626;
+  --border: #dfe1f2;
+  --shadow: 0 10px 30px rgba(25, 28, 48, 0.1);
 }
 
 * {
@@ -25,11 +44,12 @@ html, body {
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at 20% -10%, #23264a 0%, var(--bg) 45%) fixed;
+  background: radial-gradient(circle at 20% -10%, var(--bg-glow) 0%, var(--bg) 45%) fixed;
   color: var(--text);
   font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 a {
@@ -41,9 +61,10 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
-  background: rgba(15, 18, 32, 0.7);
+  background: var(--header-bg);
   backdrop-filter: blur(8px);
   position: sticky;
   top: 0;
@@ -67,6 +88,13 @@ a {
   border-radius: 10px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   font-size: 1.1rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 nav.site-nav {
@@ -95,6 +123,30 @@ nav.site-nav a.active {
   border-color: var(--border);
 }
 
+.theme-toggle-btn {
+  appearance: none;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--accent);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.94);
+}
+
 main {
   flex: 1;
   width: 100%;
@@ -120,6 +172,16 @@ footer.site-footer {
   color: var(--text-dim);
   margin: 0 0 2rem;
   max-width: 60ch;
+}
+
+kbd {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  font-family: inherit;
+  font-size: 0.85em;
 }
 
 .card-grid {
