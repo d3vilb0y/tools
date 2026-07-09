@@ -18,7 +18,30 @@
     "#fbbf24", "#f87171", "#60a5fa", "#a78bfa",
   ];
 
-  let names = DEFAULT_NAMES.slice();
+  const NAMES_KEY = "toolbox-wheel-names";
+  const REMOVE_KEY = "toolbox-wheel-remove-winner";
+
+  function loadNames() {
+    try {
+      const raw = localStorage.getItem(NAMES_KEY);
+      if (!raw) return DEFAULT_NAMES.slice();
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch (e) {
+      // ignore malformed/unavailable storage
+    }
+    return DEFAULT_NAMES.slice();
+  }
+
+  function saveNames() {
+    try {
+      localStorage.setItem(NAMES_KEY, JSON.stringify(names));
+    } catch (e) {
+      // storage unavailable - ignore
+    }
+  }
+
+  let names = loadNames();
   let rotation = 0;
   let spinning = false;
 
@@ -148,6 +171,7 @@
     if (removeWinnerToggle.checked) {
       names.splice(winnerIndex, 1);
       syncTextarea();
+      saveNames();
       rotation = 0;
       canvas.style.transition = "none";
       canvas.style.transform = "rotate(0deg)";
@@ -187,6 +211,7 @@
 
   updateWheelBtn.addEventListener("click", () => {
     names = parseNames();
+    saveNames();
     drawWheel();
   });
 
@@ -197,19 +222,44 @@
       [names[i], names[j]] = [names[j], names[i]];
     }
     syncTextarea();
+    saveNames();
     drawWheel();
   });
 
   resetNamesBtn.addEventListener("click", () => {
     names = DEFAULT_NAMES.slice();
     syncTextarea();
+    saveNames();
     drawWheel();
+  });
+
+  removeWinnerToggle.addEventListener("change", () => {
+    try {
+      localStorage.setItem(REMOVE_KEY, removeWinnerToggle.checked ? "1" : "0");
+    } catch (e) {
+      // storage unavailable - ignore
+    }
   });
 
   closeWinnerBtn.addEventListener("click", hideWinner);
   winnerOverlay.addEventListener("click", (e) => {
     if (e.target === winnerOverlay) hideWinner();
   });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.code !== "Space") return;
+    const tag = document.activeElement && document.activeElement.tagName;
+    if (tag === "TEXTAREA" || tag === "INPUT" || tag === "BUTTON") return;
+    if (winnerOverlay.classList.contains("show")) return;
+    e.preventDefault();
+    spin();
+  });
+
+  try {
+    removeWinnerToggle.checked = localStorage.getItem(REMOVE_KEY) === "1";
+  } catch (e) {
+    // storage unavailable - ignore
+  }
 
   syncTextarea();
   drawWheel();

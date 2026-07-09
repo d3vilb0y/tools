@@ -2,8 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("toolbox-theme");
+        if (!t) t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spin the Wheel &mdash; Toolbox</title>
+  <meta name="description" content="A spinning wheel / name picker with a smooth animation. Great for picking winners, teams, or who goes first." />
+  <meta property="og:title" content="Spin the Wheel — Toolbox" />
+  <meta property="og:description" content="A spinning wheel / name picker with a smooth animation." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#7c5cff" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/wheel.css" />
 </head>
@@ -17,13 +32,14 @@
       <a href="index.html">Home</a>
       <a href="wheel.html" class="active">Spin the Wheel</a>
       <a href="timer.html">Timer / Stopwatch</a>
+      <a href="qr.html">QR Code</a>
       <a href="links.html">Links</a>
     </nav>
   </header>
 
   <main>
     <h1 class="page-title">🎡 Spin the Wheel</h1>
-    <p class="page-subtitle">Enter one name per line, then spin to pick a winner.</p>
+    <p class="page-subtitle">Enter one name per line, then spin to pick a winner. Press <kbd>Space</kbd> to spin too.</p>
 
     <div class="wheel-layout">
       <div class="wheel-stage panel">
@@ -64,6 +80,7 @@
     </div>
   </div>
 
+  <script src="js/theme.js"></script>
   <script src="js/fullscreen.js"></script>
   <script src="js/wheel.js"></script>
 </body>

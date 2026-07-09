@@ -105,6 +105,32 @@
   const presetBtns = document.querySelectorAll(".preset-btn");
 
   const RING_CIRCUMFERENCE = 2 * Math.PI * 90;
+  const DURATION_KEY = "toolbox-timer-duration";
+
+  function loadDuration() {
+    try {
+      const raw = localStorage.getItem(DURATION_KEY);
+      if (!raw) return;
+      const d = JSON.parse(raw);
+      if (typeof d.h === "number") hoursInput.value = d.h;
+      if (typeof d.m === "number") minutesInput.value = d.m;
+      if (typeof d.s === "number") secondsInput.value = d.s;
+    } catch (e) {
+      // ignore malformed/unavailable storage
+    }
+  }
+
+  function saveDuration() {
+    try {
+      localStorage.setItem(DURATION_KEY, JSON.stringify({
+        h: parseInt(hoursInput.value, 10) || 0,
+        m: parseInt(minutesInput.value, 10) || 0,
+        s: parseInt(secondsInput.value, 10) || 0,
+      }));
+    } catch (e) {
+      // storage unavailable - ignore
+    }
+  }
 
   let cdTotalMs = 5 * 60 * 1000;
   let cdRemainingMs = cdTotalMs;
@@ -153,6 +179,7 @@
     countdownStatus.textContent = "Ready";
     countdownStatus.classList.remove("done");
     renderCountdown();
+    saveDuration();
   }
 
   function playBeep() {
@@ -252,5 +279,8 @@
     });
   });
 
+  loadDuration();
+  cdTotalMs = readDurationInputs();
+  cdRemainingMs = cdTotalMs;
   renderCountdown();
 })();

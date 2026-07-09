@@ -2,8 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("toolbox-theme");
+        if (!t) t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Timer &amp; Stopwatch &mdash; Toolbox</title>
+  <meta name="description" content="A stopwatch for tracking elapsed time, plus a countdown timer with a visual progress ring." />
+  <meta property="og:title" content="Timer &amp; Stopwatch — Toolbox" />
+  <meta property="og:description" content="A stopwatch and a visual countdown timer, right in your browser." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#7c5cff" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/timer.css" />
 </head>
@@ -17,6 +32,7 @@
       <a href="index.html">Home</a>
       <a href="wheel.html">Spin the Wheel</a>
       <a href="timer.html" class="active">Timer / Stopwatch</a>
+      <a href="qr.html">QR Code</a>
       <a href="links.html">Links</a>
     </nav>
   </header>
@@ -80,6 +96,7 @@
 
   <footer class="site-footer">Toolbox &mdash; simple browser tools</footer>
 
+  <script src="js/theme.js"></script>
   <script src="js/fullscreen.js"></script>
   <script src="js/timer.js"></script>
 </body>
