@@ -27,11 +27,15 @@
   const swResetBtn = document.getElementById("swResetBtn");
   const lapList = document.getElementById("lapList");
 
+  const SW_STATE_KEY = "toolbox-stopwatch-state";
+
   let swElapsed = 0;
   let swRunning = false;
   let swStartTime = 0;
+  let swStartEpoch = 0;
   let swRafId = null;
   let lapCount = 0;
+  let laps = [];
 
   function formatStopwatch(ms) {
     const centis = Math.floor((ms % 1000) / 10);
@@ -43,6 +47,28 @@
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}.${pad(centis)}`;
   }
 
+  function saveStopwatchState() {
+    try {
+      localStorage.setItem(SW_STATE_KEY, JSON.stringify({
+        elapsed: swElapsed,
+        running: swRunning,
+        startEpoch: swStartEpoch,
+        laps: laps,
+      }));
+    } catch (e) {
+      // storage unavailable - ignore
+    }
+  }
+
+  function renderLaps() {
+    lapList.innerHTML = "";
+    laps.forEach((lap) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<span>Lap ${lap.n}</span><span>${formatStopwatch(lap.ms)}</span>`;
+      lapList.appendChild(li);
+    });
+  }
+
   function swTick() {
     const now = performance.now();
     const current = swElapsed + (now - swStartTime);
@@ -50,14 +76,20 @@
     swRafId = requestAnimationFrame(swTick);
   }
 
-  swStartBtn.addEventListener("click", () => {
-    if (swRunning) return;
+  function startStopwatch() {
     swRunning = true;
     swStartTime = performance.now();
+    swStartEpoch = Date.now();
     swRafId = requestAnimationFrame(swTick);
     swStartBtn.disabled = true;
     swPauseBtn.disabled = false;
     swLapBtn.disabled = false;
+  }
+
+  swStartBtn.addEventListener("click", () => {
+    if (swRunning) return;
+    startStopwatch();
+    saveStopwatchState();
   });
 
   swPauseBtn.addEventListener("click", () => {
@@ -68,6 +100,7 @@
     swStartBtn.disabled = false;
     swPauseBtn.disabled = true;
     swLapBtn.disabled = true;
+    saveStopwatchState();
   });
 
   swResetBtn.addEventListener("click", () => {
@@ -75,11 +108,13 @@
     cancelAnimationFrame(swRafId);
     swElapsed = 0;
     lapCount = 0;
+    laps = [];
     stopwatchDisplay.textContent = formatStopwatch(0);
     lapList.innerHTML = "";
     swStartBtn.disabled = false;
     swPauseBtn.disabled = true;
     swLapBtn.disabled = true;
+    saveStopwatchState();
   });
 
   swLapBtn.addEventListener("click", () => {
@@ -87,10 +122,33 @@
     lapCount += 1;
     const now = performance.now();
     const current = swElapsed + (now - swStartTime);
-    const li = document.createElement("li");
-    li.innerHTML = `<span>Lap ${lapCount}</span><span>${formatStopwatch(current)}</span>`;
-    lapList.prepend(li);
+    laps.unshift({ n: lapCount, ms: current });
+    renderLaps();
+    saveStopwatchState();
   });
+
+  function loadStopwatchState() {
+    try {
+      const raw = localStorage.getItem(SW_STATE_KEY);
+      if (!raw) return;
+      const s = JSON.parse(raw);
+      swElapsed = typeof s.elapsed === "number" ? s.elapsed : 0;
+      lapCount = Array.isArray(s.laps) && s.laps.length > 0 ? s.laps[0].n : 0;
+      laps = Array.isArray(s.laps) ? s.laps : [];
+      renderLaps();
+
+      if (s.running && typeof s.startEpoch === "number") {
+        swElapsed += Date.now() - s.startEpoch;
+        startStopwatch();
+      } else {
+        stopwatchDisplay.textContent = formatStopwatch(swElapsed);
+        swPauseBtn.disabled = true;
+        swLapBtn.disabled = true;
+      }
+    } catch (e) {
+      // ignore malformed/unavailable storage
+    }
+  }
 
   // ---------- Countdown ----------
   const hoursInput = document.getElementById("hoursInput");
@@ -132,12 +190,29 @@
     }
   }
 
+  const CD_STATE_KEY = "toolbox-timer-countdown-state";
+
   let cdTotalMs = 5 * 60 * 1000;
   let cdRemainingMs = cdTotalMs;
   let cdRunning = false;
   let cdStartTime = 0;
   let cdStartRemaining = 0;
+  let cdStartEpoch = 0;
   let cdRafId = null;
+
+  function saveCountdownState() {
+    try {
+      localStorage.setItem(CD_STATE_KEY, JSON.stringify({
+        totalMs: cdTotalMs,
+        remainingMs: cdRemainingMs,
+        running: cdRunning,
+        startEpoch: cdStartEpoch,
+        startRemaining: cdStartRemaining,
+      }));
+    } catch (e) {
+      // storage unavailable - ignore
+    }
+  }
 
   function formatCountdown(ms) {
     const totalSeconds = Math.max(0, Math.ceil(ms / 1000));
@@ -219,9 +294,24 @@
       playBeep();
       cdStartBtn.disabled = false;
       cdPauseBtn.disabled = true;
+      saveCountdownState();
       return;
     }
 
+    cdRafId = requestAnimationFrame(cdTick);
+  }
+
+  function startCountdown(remainingMs) {
+    cdRunning = true;
+    cdStartTime = performance.now();
+    cdStartEpoch = Date.now();
+    cdStartRemaining = remainingMs;
+    cdRemainingMs = remainingMs;
+    countdownStatus.textContent = "Running";
+    countdownStatus.classList.remove("done");
+    cdStartBtn.disabled = true;
+    cdPauseBtn.disabled = false;
+    renderCountdown();
     cdRafId = requestAnimationFrame(cdTick);
   }
 
@@ -233,14 +323,8 @@
     }
     if (cdRemainingMs <= 0) return;
 
-    cdRunning = true;
-    cdStartTime = performance.now();
-    cdStartRemaining = cdRemainingMs;
-    countdownStatus.textContent = "Running";
-    countdownStatus.classList.remove("done");
-    cdStartBtn.disabled = true;
-    cdPauseBtn.disabled = false;
-    cdRafId = requestAnimationFrame(cdTick);
+    startCountdown(cdRemainingMs);
+    saveCountdownState();
   });
 
   cdPauseBtn.addEventListener("click", () => {
@@ -250,6 +334,7 @@
     countdownStatus.textContent = "Paused";
     cdStartBtn.disabled = false;
     cdPauseBtn.disabled = true;
+    saveCountdownState();
   });
 
   cdResetBtn.addEventListener("click", () => {
@@ -262,7 +347,44 @@
     cdStartBtn.disabled = false;
     cdPauseBtn.disabled = true;
     renderCountdown();
+    saveCountdownState();
   });
+
+  function loadCountdownState() {
+    try {
+      const raw = localStorage.getItem(CD_STATE_KEY);
+      if (!raw) return false;
+      const s = JSON.parse(raw);
+      if (typeof s.totalMs !== "number") return false;
+      cdTotalMs = s.totalMs;
+
+      if (s.running && typeof s.startEpoch === "number") {
+        const gap = Date.now() - s.startEpoch;
+        const newRemaining = s.startRemaining - gap;
+        if (newRemaining <= 0) {
+          cdRemainingMs = 0;
+          countdownStatus.textContent = "Time's up!";
+          countdownStatus.classList.add("done");
+          cdStartBtn.disabled = false;
+          cdPauseBtn.disabled = true;
+        } else {
+          startCountdown(newRemaining);
+        }
+      } else {
+        cdRemainingMs = typeof s.remainingMs === "number" ? s.remainingMs : cdTotalMs;
+        if (cdRemainingMs <= 0 && cdTotalMs > 0) {
+          countdownStatus.textContent = "Time's up!";
+          countdownStatus.classList.add("done");
+        } else if (cdRemainingMs < cdTotalMs) {
+          countdownStatus.textContent = "Paused";
+        }
+      }
+      renderCountdown();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   [hoursInput, minutesInput, secondsInput].forEach((input) => {
     input.addEventListener("change", setDurationFromInputs);
@@ -280,7 +402,21 @@
   });
 
   loadDuration();
-  cdTotalMs = readDurationInputs();
-  cdRemainingMs = cdTotalMs;
-  renderCountdown();
+  if (!loadCountdownState()) {
+    cdTotalMs = readDurationInputs();
+    cdRemainingMs = cdTotalMs;
+    renderCountdown();
+  }
+
+  loadStopwatchState();
+
+  function persistRunningState() {
+    if (swRunning) saveStopwatchState();
+    if (cdRunning) saveCountdownState();
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) persistRunningState();
+  });
+  window.addEventListener("pagehide", persistRunningState);
 })();
