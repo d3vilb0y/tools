@@ -21,6 +21,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/shorten.css" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -45,8 +46,17 @@
     <div class="shorten-panel panel">
       <form id="shortenForm" class="shorten-form">
         <input id="urlInput" type="url" placeholder="https://example.com/a/very/long/url" required />
-        <button type="submit" id="shortenBtn" class="btn btn-primary">✂️ Shorten</button>
+        <button type="submit" id="shortenBtn" class="btn btn-primary" disabled>✂️ Shorten</button>
       </form>
+      <div
+        id="turnstileWidget"
+        class="cf-turnstile"
+        data-sitekey="0x4AAAAAAFGz0BWV0qJC-pbX"
+        data-theme="auto"
+        data-callback="onTurnstileVerified"
+        data-expired-callback="onTurnstileReset"
+        data-error-callback="onTurnstileReset"
+      ></div>
       <p id="shortenError" class="shorten-error"></p>
 
       <div id="resultCard" class="result-card" hidden>
