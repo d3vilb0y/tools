@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("toolbox-theme");
+        if (!t) t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URL Shortener &mdash; Toolbox</title>
+  <meta name="description" content="Turn a long URL into a short, shareable link. Links expire automatically after 7 days." />
+  <meta property="og:title" content="URL Shortener — Toolbox" />
+  <meta property="og:description" content="Turn a long URL into a short, shareable link. Links expire automatically after 7 days." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#7c5cff" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/shorten.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">🧰</span>
+      Toolbox
+    </div>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="wheel.html">Spin the Wheel</a>
+      <a href="timer.html">Timer / Stopwatch</a>
+      <a href="qr.html">QR Code</a>
+      <a href="shorten.html" class="active">Shorten URL</a>
+      <a href="links.html">Links</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">✂️ URL Shortener</h1>
+    <p class="page-subtitle">Turn a long link into a short, shareable one. Links expire automatically after 7 days.</p>
+
+    <div class="shorten-panel panel">
+      <form id="shortenForm" class="shorten-form">
+        <input id="urlInput" type="url" placeholder="https://example.com/a/very/long/url" required />
+        <button type="submit" id="shortenBtn" class="btn btn-primary">✂️ Shorten</button>
+      </form>
+      <p id="shortenError" class="shorten-error"></p>
+
+      <div id="resultCard" class="result-card" hidden>
+        <div class="result-row">
+          <a id="resultLink" class="result-link" href="#" target="_blank" rel="noopener noreferrer"></a>
+          <button id="copyBtn" class="btn btn-ghost">📋 Copy</button>
+        </div>
+        <div class="result-meta">
+          <span id="resultExpiry"></span>
+          <a id="resultQrLink" class="result-qr-link" href="#">Generate QR code →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel recent-panel">
+      <div class="recent-header">
+        <h2>Your recent links</h2>
+        <button id="clearRecentBtn" class="btn btn-ghost">Clear list</button>
+      </div>
+      <p class="recent-hint">Remembered on this device only &mdash; the actual links still expire after 7 days regardless.</p>
+      <ol id="recentList" class="recent-list"></ol>
+    </div>
+  </main>
+
+  <footer class="site-footer">Toolbox &mdash; simple browser tools</footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/fullscreen.js"></script>
+  <script src="js/shorten.js"></script>
+</body>
+</html>
