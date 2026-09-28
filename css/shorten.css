@@ -1,0 +1,138 @@
+.shorten-panel {
+  margin-bottom: 1.5rem;
+}
+
+.shorten-form {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+#urlInput {
+  flex: 1;
+  min-width: 220px;
+}
+
+.shorten-error {
+  color: var(--danger);
+  font-size: 0.9rem;
+  min-height: 1.2em;
+  margin: 0.75rem 0 0;
+}
+
+.result-card {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.result-link {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent-2);
+  word-break: break-all;
+}
+
+.result-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.result-qr-link {
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
+.recent-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.recent-header h2 {
+  margin: 0;
+}
+
+.recent-hint {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin: 0.35rem 0 1rem;
+}
+
+.recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.recent-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+}
+
+.recent-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.recent-item-short {
+  color: var(--accent-2);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.recent-item-original {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 40ch;
+}
+
+.recent-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.recent-item-expiry {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.recent-empty {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}

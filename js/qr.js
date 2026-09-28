@@ -133,6 +133,8 @@
     link.click();
   });
 
-  qrInput.value = "https://secrets.nsalabb.se";
+  const params = new URLSearchParams(window.location.search);
+  const prefill = params.get("text");
+  qrInput.value = prefill && prefill.trim() ? prefill : "https://secrets.nsalabb.se";
   renderQR(qrInput.value);
 })();
