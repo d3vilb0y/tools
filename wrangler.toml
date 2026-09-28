@@ -1,2 +1,7 @@
 name = "tools"
 pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "LINKS"
+id = "ef6bd8badf134fa5af70455d294c4868"
+
