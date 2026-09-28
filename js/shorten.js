@@ -17,6 +17,25 @@
 
   let recent = loadRecent();
   let currentShortUrl = "";
+  let turnstileToken = "";
+
+  window.onTurnstileVerified = function (token) {
+    turnstileToken = token;
+    shortenBtn.disabled = false;
+  };
+
+  window.onTurnstileReset = function () {
+    turnstileToken = "";
+    shortenBtn.disabled = true;
+  };
+
+  function resetTurnstile() {
+    turnstileToken = "";
+    shortenBtn.disabled = true;
+    if (window.turnstile) {
+      window.turnstile.reset("#turnstileWidget");
+    }
+  }
 
   function loadRecent() {
     try {
@@ -144,6 +163,11 @@
 
     if (!url) return;
 
+    if (!turnstileToken) {
+      shortenError.textContent = "Please complete the verification challenge.";
+      return;
+    }
+
     shortenBtn.disabled = true;
     shortenBtn.textContent = "Shortening…";
 
@@ -151,7 +175,7 @@
       const res = await fetch("/api/shorten", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url, turnstileToken }),
       });
 
       let data;
@@ -186,8 +210,9 @@
       shortenError.textContent = "Couldn't reach the server. Check your connection and try again.";
       resultCard.hidden = true;
     } finally {
-      shortenBtn.disabled = false;
       shortenBtn.textContent = "✂️ Shorten";
+      // Turnstile tokens are single-use - get a fresh one for the next attempt.
+      resetTurnstile();
     }
   });
 
