@@ -3,15 +3,19 @@
 // src/web/Starfield.tsx for drawing), so every nsalabb.se page shows the same sky.
 // Draws once and stops under prefers-reduced-motion, and pauses while the tab is hidden.
 // Purely decorative: without JavaScript the page is the same, minus the stars.
+// Tools site change: tints are re-read when data-theme changes (light/dark toggle).
 (() => {
   const FPS = 24; // twinkles are slow; this keeps phones cool
-  const css = getComputedStyle(document.documentElement);
-  const tint = (name, fallback) => css.getPropertyValue(name).trim() || fallback;
-  const TINTS = {
-    ink: tint("--nl-text", "#f1efe8"),
-    accent: tint("--nl-accent", "#e4002b"),
-    support: tint("--nl-support", "#8a9a52"),
-  };
+  const TINTS = {};
+  // Re-read on theme change (tools site addition), so stars stay visible in both themes.
+  function readTints() {
+    const css = getComputedStyle(document.documentElement);
+    const tint = (name, fallback) => css.getPropertyValue(name).trim() || fallback;
+    TINTS.ink = tint("--nl-text", "#f1efe8");
+    TINTS.accent = tint("--nl-accent", "#e4002b");
+    TINTS.support = tint("--nl-support", "#8a9a52");
+  }
+  readTints();
 
   /** Small deterministic PRNG (mulberry32) so the sky is the same on every load. */
   function rng(seed) {
@@ -104,4 +108,8 @@
   addEventListener("resize", size);
   document.addEventListener("visibilitychange", run);
   still.addEventListener("change", run);
+  new MutationObserver(() => {
+    readTints();
+    draw((performance.now() - start) / 1000);
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 })();
