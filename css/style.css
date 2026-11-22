@@ -19,6 +19,9 @@
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   --font-ui: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* Star tints read by js/starfield.js (shared nsalabb.se starfield). */
+  --nl-text: #f5f3ee;
+  --nl-accent: #f5b342;
 }
 
 :root[data-theme="light"] {
@@ -38,6 +41,8 @@
   --danger: #dc2626;
   --border: #e2ded4;
   --shadow: 0 10px 30px rgba(13, 17, 23, 0.08);
+  --nl-text: #0d1117;
+  --nl-accent: #a86a0c;
 }
 
 * {
@@ -58,6 +63,15 @@ body {
   display: flex;
   flex-direction: column;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.starfield {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 a {
