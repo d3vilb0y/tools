@@ -9,8 +9,7 @@
 
   const QUIET_ZONE = 4;
   const TARGET_SIZE = 560;
-  const MODULE_COLOR = "#0b0d1a";
-  const BADGE_TEXT = "NSALABB";
+  const MODULE_COLOR = "#0d1117";
 
   function roundRectPath(context, x, y, w, h, r) {
     context.beginPath();
@@ -32,24 +31,23 @@
     roundRectPath(ctx, x - pad, y - pad, badgeSize + pad * 2, badgeSize + pad * 2, (badgeSize + pad * 2) * 0.22);
     ctx.fill();
 
-    const grad = ctx.createLinearGradient(x, y, x + badgeSize, y + badgeSize);
-    grad.addColorStop(0, "#7c5cff");
-    grad.addColorStop(1, "#22d3ee");
-    ctx.fillStyle = grad;
-    roundRectPath(ctx, x, y, badgeSize, badgeSize, badgeSize * 0.22);
+    // nsalabb app icon (svg/nsalabb-icon.svg), drawn on a 64-unit grid scaled to the badge.
+    const scale = badgeSize / 64;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(scale, scale);
+    ctx.fillStyle = "#0D1117";
+    roundRectPath(ctx, 0, 0, 64, 64, 14);
     ctx.fill();
-
-    ctx.fillStyle = "#0b0d1a";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    const maxTextWidth = badgeSize * 0.84;
-    let fontSize = badgeSize * 0.22;
-    ctx.font = `700 ${fontSize}px Segoe UI, sans-serif`;
-    while (fontSize > badgeSize * 0.08 && ctx.measureText(BADGE_TEXT).width > maxTextWidth) {
-      fontSize -= 1;
-      ctx.font = `700 ${fontSize}px Segoe UI, sans-serif`;
-    }
-    ctx.fillText(BADGE_TEXT, x + badgeSize / 2, y + badgeSize / 2 + fontSize * 0.02);
+    ctx.strokeStyle = "#F5F3EE";
+    ctx.lineWidth = 7;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.stroke(new Path2D("M16 46V22M16 31C16 25 20.5 22 26 22S36 25 36 31V46"));
+    ctx.fillStyle = "#F5B342";
+    roundRectPath(ctx, 42, 40, 11, 6.5, 1);
+    ctx.fill();
+    ctx.restore();
   }
 
   function drawPlaceholder() {
@@ -57,10 +55,10 @@
     canvas.height = TARGET_SIZE;
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, TARGET_SIZE, TARGET_SIZE);
-    ctx.fillStyle = "#9aa1c4";
+    ctx.fillStyle = "#9da3ad";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = "20px Segoe UI, sans-serif";
+    ctx.font = "20px Space Grotesk, Segoe UI, sans-serif";
     ctx.fillText("Enter content to generate a QR code", TARGET_SIZE / 2, TARGET_SIZE / 2);
   }
 
