@@ -1,36 +1,48 @@
 :root {
-  --bg: #0f1220;
-  --bg-glow: #23264a;
-  --bg-elevated: #1a1e33;
-  --bg-card: #171b30;
-  --header-bg: rgba(15, 18, 32, 0.7);
-  --text: #f1f3fb;
-  --text-dim: #9aa1c4;
-  --accent: #7c5cff;
-  --accent-2: #22d3ee;
-  --accent-3: #f472b6;
-  --success: #34d399;
+  /* nsalabb brand: ink #0D1117, panel #161B22, paper #F5F3EE, amber #F5B342, amber-deep #A86A0C */
+  --bg: #0d1117;
+  --bg-glow: #161b22;
+  --bg-elevated: #1c222b;
+  --bg-card: #161b22;
+  --header-bg: rgba(13, 17, 23, 0.82);
+  --text: #f5f3ee;
+  --text-dim: #9da3ad;
+  --accent: #f5b342;
+  --accent-2: #f5b342;
+  --accent-3: #f5b342;
+  --primary-bg: #f5b342;
+  --primary-text: #0d1117;
+  --success: #3fb950;
   --danger: #f87171;
-  --border: #2a2f4d;
-  --radius: 16px;
+  --border: #272d37;
+  --radius: 14px;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --font-ui: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* Star tints read by js/starfield.js (shared nsalabb.se starfield). */
+  --nl-text: #f5f3ee;
+  --nl-accent: #f5b342;
 }
 
 :root[data-theme="light"] {
-  --bg: #f3f4fb;
-  --bg-glow: #dfe2fa;
+  --bg: #f5f3ee;
+  --bg-glow: #ebe7dd;
   --bg-elevated: #ffffff;
   --bg-card: #ffffff;
-  --header-bg: rgba(255, 255, 255, 0.75);
-  --text: #191c30;
-  --text-dim: #5b6089;
-  --accent: #6d4aff;
-  --accent-2: #0891b2;
-  --accent-3: #db2777;
-  --success: #059669;
+  --header-bg: rgba(245, 243, 238, 0.85);
+  --text: #0d1117;
+  --text-dim: #5a5f68;
+  --accent: #a86a0c;
+  --accent-2: #a86a0c;
+  --accent-3: #a86a0c;
+  --primary-bg: #0d1117;
+  --primary-text: #f5f3ee;
+  --success: #1a7f37;
   --danger: #dc2626;
-  --border: #dfe1f2;
-  --shadow: 0 10px 30px rgba(25, 28, 48, 0.1);
+  --border: #e2ded4;
+  --shadow: 0 10px 30px rgba(13, 17, 23, 0.08);
+  --nl-text: #0d1117;
+  --nl-accent: #a86a0c;
 }
 
 * {
@@ -43,13 +55,23 @@ html, body {
 }
 
 body {
+  accent-color: var(--accent);
   min-height: 100vh;
   background: radial-gradient(circle at 20% -10%, var(--bg-glow) 0%, var(--bg) 45%) fixed;
   color: var(--text);
-  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  font-family: var(--font-ui);
   display: flex;
   flex-direction: column;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.starfield {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 a {
@@ -74,20 +96,24 @@ a {
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: 0.02em;
 }
 
-.brand-mark {
-  display: inline-grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  font-size: 1.1rem;
+.brand-logo {
+  display: block;
+  height: 32px;
+  width: auto;
+}
+
+.brand-logo-light {
+  display: none;
+}
+
+:root[data-theme="light"] .brand-logo-dark {
+  display: none;
+}
+
+:root[data-theme="light"] .brand-logo-light {
+  display: block;
 }
 
 .header-right {
@@ -164,6 +190,9 @@ footer.site-footer {
 }
 
 .page-title {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: -0.01em;
   font-size: 2rem;
   margin: 0 0 0.4rem;
 }
@@ -240,6 +269,7 @@ kbd {
 
 .btn {
   appearance: none;
+  font-family: inherit;
   border: 1px solid var(--border);
   background: var(--bg-elevated);
   color: var(--text);
@@ -268,9 +298,9 @@ kbd {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background: var(--primary-bg);
   border-color: transparent;
-  color: #0b0d1a;
+  color: var(--primary-text);
 }
 
 .btn-primary:hover {
@@ -309,7 +339,7 @@ kbd {
   font-size: 1rem;
 }
 
-textarea, input[type="text"], input[type="number"] {
+textarea, input[type="text"], input[type="number"], input[type="url"] {
   font-family: inherit;
   background: var(--bg);
   border: 1px solid var(--border);

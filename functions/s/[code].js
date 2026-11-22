@@ -4,7 +4,8 @@ function notFoundPage() {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Link not found &mdash; Toolbox</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<title>Link not found &mdash; nsalabb</title>
 <style>
   :root { color-scheme: dark; }
   body {
@@ -13,27 +14,27 @@ function notFoundPage() {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle at 20% -10%, #23264a 0%, #0f1220 45%);
-    color: #f1f3fb;
-    font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    background: #0d1117;
+    color: #f5f3ee;
+    font-family: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     text-align: center;
     padding: 1.5rem;
   }
   .card {
-    background: #171b30;
-    border: 1px solid #2a2f4d;
-    border-radius: 16px;
+    background: #161b22;
+    border: 1px solid #272d37;
+    border-radius: 14px;
     padding: 2.5rem;
     max-width: 420px;
   }
   h1 { margin: 0 0 0.5rem; font-size: 1.5rem; }
-  p { color: #9aa1c4; margin: 0 0 1.5rem; }
+  p { color: #9da3ad; margin: 0 0 1.5rem; }
   a {
     display: inline-block;
     padding: 0.65rem 1.2rem;
     border-radius: 10px;
-    background: linear-gradient(135deg, #7c5cff, #22d3ee);
-    color: #0b0d1a;
+    background: #f5b342;
+    color: #0d1117;
     font-weight: 600;
     text-decoration: none;
   }
@@ -41,7 +42,8 @@ function notFoundPage() {
 </head>
 <body>
   <div class="card">
-    <h1>🔗 Link not found</h1>
+    <img src="/img/brand/nsalabb-icon.svg" alt="nsalabb" width="48" height="48" style="display:block;margin:0 auto 1rem" />
+    <h1>Link not found</h1>
     <p>This short link doesn't exist, or it expired 7 days after it was created.</p>
     <a href="/shorten.html">Shorten a new URL</a>
   </div>

@@ -30,7 +30,7 @@
 }
 
 .stopwatch-display {
-  font-family: "Cascadia Code", "Consolas", monospace;
+  font-family: var(--font-mono);
   font-size: clamp(2.5rem, 8vw, 4.5rem);
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -57,7 +57,7 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.5rem 0.9rem;
-  font-family: "Cascadia Code", "Consolas", monospace;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
 }
 
@@ -123,7 +123,7 @@
 }
 
 .countdown-display {
-  font-family: "Cascadia Code", "Consolas", monospace;
+  font-family: var(--font-mono);
   font-size: clamp(2rem, 6vw, 3rem);
   font-weight: 700;
 }

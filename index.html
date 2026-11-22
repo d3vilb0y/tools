@@ -12,21 +12,27 @@
     })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toolbox</title>
+  <title>nsalabb tools</title>
   <meta name="description" content="A small collection of simple browser tools: a spin-the-wheel name picker, a timer/stopwatch, a QR code generator, and a URL shortener." />
-  <meta property="og:title" content="Toolbox" />
+  <meta property="og:title" content="nsalabb tools" />
   <meta property="og:description" content="Simple browser tools — wheel picker, timer/stopwatch, QR generator, URL shortener, and links." />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#7c5cff" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0D1117" />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="brand">
-      <span class="brand-mark">🧰</span>
-      Toolbox
-    </div>
+    <a class="brand" href="index.html" aria-label="nsalabb tools home">
+      <img class="brand-logo brand-logo-dark" src="img/brand/nsalabb-lockup-dark.svg" alt="nsalabb" width="129" height="32" />
+      <img class="brand-logo brand-logo-light" src="img/brand/nsalabb-lockup-light.svg" alt="nsalabb" width="129" height="32" />
+    </a>
     <nav class="site-nav">
       <a href="index.html" class="active">Home</a>
       <a href="wheel.html">Spin the Wheel</a>
@@ -59,7 +65,7 @@
       <a class="tool-card" href="qr.html">
         <span class="icon">🔳</span>
         <h2>QR Code Generator</h2>
-        <p>Turn any link or text into a scannable QR code, with an optional NSALABB badge to make it your own.</p>
+        <p>Turn any link or text into a scannable QR code, with an optional nsalabb badge to make it your own.</p>
         <span class="go">Open tool →</span>
       </a>
 
@@ -79,8 +85,9 @@
     </div>
   </main>
 
-  <footer class="site-footer">Toolbox &mdash; simple browser tools</footer>
+  <footer class="site-footer">nsalabb &mdash; simple browser tools</footer>
   <script src="js/theme.js"></script>
+  <script src="js/starfield.js"></script>
   <script src="js/fullscreen.js"></script>
 </body>
 </html>

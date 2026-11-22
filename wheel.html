@@ -12,22 +12,28 @@
     })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spin the Wheel &mdash; Toolbox</title>
+  <title>Spin the Wheel &mdash; nsalabb</title>
   <meta name="description" content="A spinning wheel / name picker with a smooth animation. Great for picking winners, teams, or who goes first." />
-  <meta property="og:title" content="Spin the Wheel — Toolbox" />
+  <meta property="og:title" content="Spin the Wheel — nsalabb" />
   <meta property="og:description" content="A spinning wheel / name picker with a smooth animation." />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#7c5cff" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0D1117" />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/wheel.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="brand">
-      <span class="brand-mark">🧰</span>
-      Toolbox
-    </div>
+    <a class="brand" href="index.html" aria-label="nsalabb tools home">
+      <img class="brand-logo brand-logo-dark" src="img/brand/nsalabb-lockup-dark.svg" alt="nsalabb" width="129" height="32" />
+      <img class="brand-logo brand-logo-light" src="img/brand/nsalabb-lockup-light.svg" alt="nsalabb" width="129" height="32" />
+    </a>
     <nav class="site-nav">
       <a href="index.html">Home</a>
       <a href="wheel.html" class="active">Spin the Wheel</a>
@@ -70,7 +76,7 @@
     </div>
   </main>
 
-  <footer class="site-footer">Toolbox &mdash; simple browser tools</footer>
+  <footer class="site-footer">nsalabb &mdash; simple browser tools</footer>
 
   <div id="winnerOverlay" class="winner-overlay">
     <div id="confettiLayer" class="confetti-layer"></div>
@@ -82,6 +88,7 @@
   </div>
 
   <script src="js/theme.js"></script>
+  <script src="js/starfield.js"></script>
   <script src="js/fullscreen.js"></script>
   <script src="js/wheel.js"></script>
 </body>

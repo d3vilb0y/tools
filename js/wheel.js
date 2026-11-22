@@ -14,7 +14,7 @@
 
   const DEFAULT_NAMES = ["Alice", "Bob", "Charlie", "Dana", "Evan", "Fiona"];
   const PALETTE = [
-    "#7c5cff", "#22d3ee", "#f472b6", "#34d399",
+    "#f5b342", "#22d3ee", "#f472b6", "#34d399",
     "#fbbf24", "#f87171", "#60a5fa", "#a78bfa",
   ];
 
@@ -62,11 +62,11 @@
     ctx.clearRect(0, 0, size, size);
 
     if (names.length === 0) {
-      ctx.fillStyle = "#1a1e33";
+      ctx.fillStyle = "#161b22";
       ctx.beginPath();
       ctx.arc(radius, radius, radius - 4, 0, Math.PI * 2);
       ctx.fill();
-      ctx.fillStyle = "#9aa1c4";
+      ctx.fillStyle = "#9da3ad";
       ctx.font = "20px Segoe UI, sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -101,10 +101,10 @@
 
     ctx.beginPath();
     ctx.arc(radius, radius, 26, 0, Math.PI * 2);
-    ctx.fillStyle = "#0f1220";
+    ctx.fillStyle = "#0d1117";
     ctx.fill();
     ctx.lineWidth = 4;
-    ctx.strokeStyle = "#2a2f4d";
+    ctx.strokeStyle = "#272d37";
     ctx.stroke();
   }
 
